@@ -20,23 +20,23 @@ let package = Package(
 	targets: [
 		.binaryTarget(
 			name: "libgit2",
-			url: "https://github.com/mfcollins3/libgit2-ios/releases/download/v1.1.0/libgit2.zip",
-			checksum: "3f11e16440aaaf58d6831a716ecd7bf29343344efb01a9bb1d800c2c9ea3d63a"
+			url: "https://github.com/amine2233/libgit2-spm/releases/download/v1.2.0/libgit2.zip",
+			checksum: "00432343fa1b7bc4ccdbebe8a2ccb246b75592f59e4a31edc3f7868c114d29bc"
 		),
 		.binaryTarget(
 			name: "libssh2",
-			url: "https://github.com/mfcollins3/libgit2-ios/releases/download/v1.1.0/libssh2.zip",
-			checksum: "1d45791a89f8229fe0db56cace11e4bd57a8df5f54a0f88f8f74159a3a3ac5f8"
+			url: "https://github.com/amine2233/libgit2-spm/releases/download/v1.2.0/libssh2.zip",
+			checksum: "e10fc4f2dd83ba4998aed619eef82f02dd28a9a19b8aff11b62e62ca0951b05a"
 		),
 		.binaryTarget(
 			name: "libssl",
-			url: "https://github.com/mfcollins3/libgit2-ios/releases/download/v1.1.0/libssl.zip",
-			checksum: "bead2f809a7b053b301a48b53a03e3d34bcec0ae130d968df4dc78ac66be326a"
+			url: "https://github.com/amine2233/libgit2-spm/releases/download/v1.2.0/libssl.zip",
+			checksum: "b03321b3d183a827c07e2fd778bd63ad1742e50fea651a561d02708108806204"
 		),
 		.binaryTarget(
 			name: "libcrypto",
-			url: "https://github.com/mfcollins3/libgit2-ios/releases/download/v1.1.0/libcrypto.zip",
-			checksum: "d267d966b1d18a943b8109cfcdc005c23557945bc490ff261423856f44157191"
+			url: "https://github.com/amine2233/libgit2-spm/releases/download/v1.2.0/libcrypto.zip",
+			checksum: "05174ed4d28e17f03a6f527521fc2bd17a7ce977525321780203489e33c7ad55"
 		),
 	]
 )
