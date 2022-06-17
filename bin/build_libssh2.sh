@@ -32,7 +32,7 @@ pushd $SCRIPT_DIR/.. > /dev/null
 ROOT_PATH=$PWD
 popd > /dev/null
 
-PLATFORMS="OS SIMULATOR CATALYST"
+PLATFORMS="OS SIMULATOR CATALYST MACOS"
 for PLATFORM in $PLATFORMS
 do
     echo "Building libssh2 for $PLATFORM"
@@ -66,25 +66,49 @@ do
             OPENSSL_CRYPTO_LIBRARY=$OPENSSL_ROOT_DIR/lib/libcrypto.a
             OPENSSL_SSL_LIBRARY=$OPENSSL_ROOT_DIR/lib/libssl.a
             ;;
+
+        "MACOS" )
+            OPENSSL_ROOT_DIR=$ROOT_PATH/build/openssl/mac64
+            OPENSSL_CRYPTO_LIBRARY=$ROOT_PATH/build/openssl/mac/lib/libcrypto.a
+            OPENSSL_SSL_LIBRARY=$ROOT_PATH/build/openssl/mac/lib/libssl.a
+            ;;
     esac
 
     OPENSSL_INCLUDE_DIR=$OPENSSL_ROOT_DIR/include
 
-    mkdir bin
-    cd bin
-    cmake \
-        -DCMAKE_TOOLCHAIN_FILE=$ROOT_PATH/External/cmake/iOS.cmake \
-        -DIOS_PLATFORM=$PLATFORM \
-        -DCMAKE_INSTALL_PREFIX=$OUTPUT_PATH \
-        -DCRYPTO_BACKEND=OpenSSL \
-        -DOPENSSL_ROOT_DIR=$OPENSSL_ROOT_DIR \
-        -DOPENSSL_CRYPTO_LIBRARY=$OPENSSL_CRYPTO_LIBRARY \
-        -DOPENSSL_SSL_LIBRARY=$OPENSSL_SSL_LIBRARY \
-        -DOPENSSL_INCLUDE_DIR=$OPENSSL_INCLUDE_DIR \
-        .. >> $LOG 2>&1
-    cmake --build . --target install >> $LOG 2>&1
+    if [ $PLATFORM == "MACOS" ]
+    then
+        mkdir bin
+        cd bin
+        cmake \
+            -DIOS_PLATFORM=$PLATFORM \
+            -DCMAKE_INSTALL_PREFIX=$OUTPUT_PATH \
+            -DCRYPTO_BACKEND=OpenSSL \
+            -DOPENSSL_ROOT_DIR=$OPENSSL_ROOT_DIR \
+            -DOPENSSL_CRYPTO_LIBRARY=$OPENSSL_CRYPTO_LIBRARY \
+            -DOPENSSL_SSL_LIBRARY=$OPENSSL_SSL_LIBRARY \
+            -DOPENSSL_INCLUDE_DIR=$OPENSSL_INCLUDE_DIR \
+            .. >> $LOG 2>&1
+        cmake --build . --target install >> $LOG 2>&1
 
-    popd > /dev/null
+        popd > /dev/null
+    else
+        mkdir bin
+        cd bin
+        cmake \
+            -DCMAKE_TOOLCHAIN_FILE=$ROOT_PATH/External/cmake/iOS.cmake \
+            -DIOS_PLATFORM=$PLATFORM \
+            -DCMAKE_INSTALL_PREFIX=$OUTPUT_PATH \
+            -DCRYPTO_BACKEND=OpenSSL \
+            -DOPENSSL_ROOT_DIR=$OPENSSL_ROOT_DIR \
+            -DOPENSSL_CRYPTO_LIBRARY=$OPENSSL_CRYPTO_LIBRARY \
+            -DOPENSSL_SSL_LIBRARY=$OPENSSL_SSL_LIBRARY \
+            -DOPENSSL_INCLUDE_DIR=$OPENSSL_INCLUDE_DIR \
+            .. >> $LOG 2>&1
+        cmake --build . --target install >> $LOG 2>&1
+
+        popd > /dev/null
+    fi
 done
 
 echo "Creating the XCFramework"
@@ -101,6 +125,8 @@ xcodebuild -create-xcframework \
     -headers $ROOT_PATH/build/libssh2/SIMULATOR/include \
     -library $ROOT_PATH/build/libssh2/CATALYST/lib/libssh2.a \
     -headers $ROOT_PATH/build/libssh2/CATALYST/include \
+    -library $ROOT_PATH/build/libssh2/MACOS/lib/libssh2.a \
+    -headers $ROOT_PATH/build/libssh2/MACOS/include \
     -output $LIBSSH2_PATH
 
 pushd $LIB_PATH > /dev/null
