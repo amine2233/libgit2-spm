@@ -1,4 +1,4 @@
-import Cgit2
+import Clibgit2
 import Foundation
 
 struct TestGit {

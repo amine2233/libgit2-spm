@@ -7,7 +7,6 @@ let package = Package(
 	platforms: [.iOS(.v13), .macOS(.v10_15)],
 	products: [
         .library(name: "GitTwo", targets: ["GitTwo"]),
-        .library(name: "Clibgit2", targets: ["Clibgit2"])
 	],
 	dependencies: [],
 	targets: [

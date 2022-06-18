@@ -1,4 +1,4 @@
-module Cgit2 {
+module Clibgit2 {
     header "Headers/git2.h"
     link "libc++.tbd"
     link "libiconv.tbd"
