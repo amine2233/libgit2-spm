@@ -1,6 +1,5 @@
 module Clibgit2 {
-    header "Headers/git2.h"
-    link "libc++.tbd"
+    header "git2.h"
     link "libiconv.tbd"
     link "libz.tbd"
     export *
