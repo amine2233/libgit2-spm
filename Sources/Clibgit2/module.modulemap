@@ -1,0 +1,7 @@
+module Cgit2 {
+    header "Headers/git2.h"
+    link "libc++.tbd"
+    link "libiconv.tbd"
+    link "libz.tbd"
+    export *
+}

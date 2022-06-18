@@ -3,21 +3,15 @@
 import PackageDescription
 
 let package = Package(
-	name: "libgit2",
+	name: "git-two",
 	platforms: [.iOS(.v13), .macOS(.v10_15)],
 	products: [
-		.library(
-			name: "libgit2",
-			targets: [
-				"libgit2",
-				"libssh2",
-				"libssl",
-				"libcrypto"
-			]
-		),
+        .library(name: "GitTwo", targets: ["GitTwo"]),
+        .library(name: "Clibgit2", targets: ["Clibgit2"])
 	],
 	dependencies: [],
 	targets: [
+        .systemLibrary(name: "Clibgit2"),
 		.binaryTarget(
 			name: "libgit2",
 			url: "https://github.com/amine2233/libgit2-spm/releases/download/v1.2.0/libgit2.zip",
@@ -38,5 +32,22 @@ let package = Package(
 			url: "https://github.com/amine2233/libgit2-spm/releases/download/v1.2.0/libcrypto.zip",
 			checksum: "05174ed4d28e17f03a6f527521fc2bd17a7ce977525321780203489e33c7ad55"
 		),
+        .target(
+            name: "GitTwo",
+            dependencies: [
+                .target(name: "Clibgit2"),
+                .target(name: "libgit2"),
+                .target(name: "libssh2"),
+                .target(name: "libssl"),
+                .target(name: "libcrypto"),
+            ],
+            linkerSettings: [
+                .linkedLibrary("iconv"),
+                .linkedLibrary("z")
+            ]
+        ),
+        .testTarget(
+            name: "GitTwoTests",
+            dependencies: ["GitTwo"]),
 	]
 )
