@@ -81,8 +81,8 @@ do
         mkdir bin
         cd bin
         cmake \
-            -DIOS_PLATFORM=$PLATFORM \
             -DCMAKE_INSTALL_PREFIX=$OUTPUT_PATH \
+            -DCMAKE_OSX_ARCHITECTURES="x86_64;arm64" \
             -DOPENSSL_ROOT_DIR=$OPENSSL_ROOT_DIR \
             -DOPENSSL_CRYPTO_LIBRARY=$OPENSSL_CRYPTO_LIBRARY \
             -DOPENSSL_SSL_LIBRARY=$OPENSSL_SSL_LIBRARY \
